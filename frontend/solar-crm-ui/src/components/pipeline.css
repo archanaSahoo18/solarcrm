@@ -1,0 +1,610 @@
+/* ================= BOARD LAYOUT ================= */
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  padding: 20px;
+  background: #f4f7fb;
+  align-items: start;
+}
+
+/* ================= COLUMN ================= */
+
+.column {
+  min-width: 220px;
+  max-width: 100%;
+  background: linear-gradient(145deg, #ffffff, #f1f5f9);
+  border-radius: 14px;
+  padding: 10px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  max-height: 72vh;
+  overflow-y: auto;
+  transition: all 0.3s ease;
+}
+
+.column:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.12);
+}
+
+/* Smooth Scroll */
+.column::-webkit-scrollbar {
+  width: 6px;
+}
+.column::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.15);
+  border-radius: 10px;
+}
+
+/* ================= COLUMN HEADER ================= */
+
+.columnHeader {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  padding: 8px 10px;
+  border-radius: 12px;
+  font-weight: 700;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  color: white;
+  font-size: 13px;
+}
+
+/* Stage Colors */
+
+.h-identification {
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+}
+
+.h-documents {
+  background: linear-gradient(135deg, #f7971e, #ffd200);
+  color: #333;
+}
+
+.h-finance {
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+}
+
+.h-installation {
+  background: linear-gradient(135deg, #11998e, #38ef7d);
+  color: #0f172a;
+}
+
+.h-contract {
+  background: linear-gradient(135deg, #ff7e5f, #feb47b);
+}
+
+.h-completed {
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+}
+
+/* ================= BADGE ================= */
+
+.badge {
+  background: rgba(255,255,255,0.25);
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+/* ================= EMPTY DROP ================= */
+
+.empty {
+  padding: 12px;
+  text-align: center;
+  font-size: 12px;
+  color: #94a3b8;
+  border: 2px dashed rgba(0,0,0,0.1);
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+
+/* ================= CUSTOMER CARD ================= */
+
+.card {
+  background: white;
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.18);
+}
+
+.cardTitle {
+  font-weight: 700;
+  margin: 0;
+  font-size: 14px;
+}
+
+.cardSub {
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: #64748b;
+}
+
+/* ================= DRAG EFFECT ================= */
+
+.card:active {
+  transform: scale(1.03);
+}
+
+/* Highlight column when dragging */
+.column.draggingOver {
+  background: linear-gradient(145deg, #e0f2ff, #ffffff);
+  box-shadow: 0 0 0 2px rgba(0, 198, 255, 0.4);
+}
+
+
+/* ================= CARD HEADER ================= */
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ================= AVATAR ================= */
+
+.avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: white;
+  font-size: 14px;
+
+  background: linear-gradient(135deg, #1e3c72, #00c6ff);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+
+  transition: all 0.3s ease;
+}
+
+.card:hover .avatar {
+  transform: scale(1.1) rotate(5deg);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+}
+
+/* ================= CARD TEXT ================= */
+
+.cardText {
+  display: flex;
+  flex-direction: column;
+}
+
+.financeBtn {
+  margin-top: 10px;
+  padding: 6px 10px;
+  border: none;
+  border-radius: 6px;
+  background: #1e3c72;
+  color: white;
+  font-size: 12px;
+  cursor: pointer;
+  width: 100%;
+  transition: 0.2s ease;
+}
+
+.financeBtn:hover {
+  background: #16305a;
+}
+
+.installationBtn {
+  margin-top: 8px;
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 6px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+}
+.documentBtn {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  margin-top: 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+}
+/* Overlay */
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;      /* prevent modal touching screen edges */
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+/* Modal Box */
+.modalBox {
+  background:#ffffff;
+  padding:24px;
+  border-radius:16px;
+  width:100%;
+  max-width:420px;
+  max-height:85vh;
+  overflow-y:auto;
+  box-shadow:0 20px 40px rgba(0,0,0,0.15);
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+.modalBox::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modalBox::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+.modalBox::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Title */
+.modalBox h3 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+/* Labels */
+.modalBox label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #475569;
+}
+
+/* File Input Styling */
+.modalBox input[type="file"] {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: 0.2s;
+}
+
+.modalBox input[type="file"]:hover {
+  border-color: #2563eb;
+}
+
+/* Buttons */
+.modalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.modalActions button {
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  transition: 0.2s;
+}
+
+/* Cancel */
+.modalActions button:first-child {
+  background: #f1f5f9;
+  color: #334155;
+}
+
+.modalActions button:first-child:hover {
+  background: #e2e8f0;
+}
+
+/* Upload */
+.modalActions button:last-child {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: white;
+}
+
+.modalActions button:last-child:hover {
+  opacity: 0.9;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0 }
+  to { opacity: 1 }
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.95); opacity: 0 }
+  to { transform: scale(1); opacity: 1 }
+}
+
+.fileGroup{
+margin-bottom:15px;
+display:flex;
+flex-direction:column;
+gap:6px;
+}
+/* Pagination Container */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin: 30px 0;
+  background: white;
+  padding: 10px 18px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Page Info */
+.pageInfo {
+  font-size: 14px;
+  font-weight: 500;
+  color: #334155;
+}
+
+/* Buttons */
+.pageBtn {
+  background: #2563eb;
+  color: white;
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.pageBtn:hover:not(:disabled) {
+  background: #1d4ed8;
+}
+
+.pageBtn:disabled {
+  background: #cbd5e1;
+  cursor: not-allowed;
+}
+.required {
+  color: red;
+  font-weight: bold;
+}
+.stageActionBtn{
+  margin-top:10px;
+  padding:7px 12px;
+  border:none;
+  border-radius:6px;
+  font-size:13px;
+  cursor:pointer;
+  color:white;
+  transition:0.2s;
+}
+
+.financeBtn{
+  background:#6366f1;
+}
+
+.financeBtn:hover{
+  background:#4f46e5;
+}
+
+.installationBtn{
+  background:#16a34a;
+}
+
+.installationBtn:hover{
+  background:#15803d;
+}
+
+.contractBtn{
+  background:#f97316;
+}
+
+.contractBtn:hover{
+  background:#ea580c;
+}
+.stageSummary{
+  display:flex;
+  gap:20px;
+  padding:10px 20px;
+  background:#f7f8fb;
+  border-bottom:1px solid #eee;
+  font-weight:600;
+  font-size:14px;
+}
+
+.stageSummaryItem{
+  padding:6px 12px;
+  border-radius:6px;
+  background:#ffffff;
+  box-shadow:0 1px 3px rgba(0,0,0,0.05);
+}
+.pipelineHeader{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px;
+}
+
+
+.addCustomerBtn{
+  background:#2563eb;
+  color:white;
+  border:none;
+  padding:9px 16px;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.pipelineToolbar{
+  display:flex;
+  gap:10px;
+  margin-bottom:12px;
+}
+
+.pipelineToolbar input{
+  padding:8px;
+  border-radius:6px;
+  border:1px solid #ddd;
+  width:220px;
+}
+
+.pipelineToolbar select{
+  padding:8px;
+  border-radius:6px;
+  border:1px solid #ddd;
+}
+
+.stageSummary{
+  display:flex;
+  gap:12px;
+  margin-bottom:20px;
+  flex-wrap:wrap;
+}
+
+
+.stagePill{
+  background:#f1f5f9;
+  padding:7px 14px;
+  border-radius:20px;
+  font-size:13px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.pillCount{
+  background:#2563eb;
+  color:white;
+  border-radius:10px;
+  padding:2px 8px;
+  font-size:12px;
+}
+
+.pipelineBoardWrapper{
+  width:100%;
+  overflow-x:auto;
+}
+
+.board{
+  display:flex;
+  gap:18px;
+  overflow-x:auto;
+  padding-bottom:10px;
+}
+
+.pageTitle{
+  font-size:20px;
+  font-weight:600;
+  margin-bottom:20px;
+}
+.pipelineTitle{
+  font-size:22px;
+  font-weight:600;
+}
+.pipelineSubtitle{
+  font-size:13px;
+  color:#6b7280;
+}
+.cardBody{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.cardName{
+  font-weight:600;
+}
+.cardPhone{
+  font-size:12px;
+  color:#6b7280;
+}
+.filePreview{
+margin-top:5px;
+}
+
+.filePreview img{
+width:120px;
+height:90px;
+object-fit:cover;
+border-radius:8px;
+border:1px solid #ddd;
+}
+
+.filePreview span{
+font-size:13px;
+color:#475569;
+}
+.tableScroll{
+  width:100%;
+  overflow-x:auto;
+  overflow-y:auto;
+  max-height:520px;
+}
+
+.crmTable{
+  min-width:1100px;
+}
+.actionsRow{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+}
+
+@media (max-width:1200px){
+
+  .board{
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  }
+
+  .column{
+    min-width:200px;
+  }
+
+  .tableSearch{
+    width:180px;
+  }
+
+}
+
+@media (max-width:900px){
+
+  .tableToolbar{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:8px;
+  }
+
+  .modalBox{
+    width:95%;
+  }
+
+}

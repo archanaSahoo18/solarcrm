@@ -1,0 +1,192 @@
+/* Overlay */
+.installation-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+/* Card */
+.installation-card {
+  background: #ffffff;
+  padding: 28px 30px;
+  border-radius: 14px;
+  width: 600px;
+  max-width: 90%;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+  animation: scaleIn 0.2s ease-in-out;
+}
+
+/* Header */
+.installation-header {
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e2e8f0;
+
+}
+
+.installation-header h2 {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+  color: #0f172a;
+}
+
+/* Close Button */
+.close-btn {
+
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: none;
+  background: #f1f5f9;
+  font-size: 16px;
+  cursor: pointer;
+
+}
+
+.close-btn:hover {
+  background: #e2e8f0;
+}
+
+/* Form */
+.installation-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.installation-card input,
+.installation-card select,
+.installation-card textarea {
+
+  padding: 11px 12px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+  background: #f8fafc;
+  transition: 0.2s;
+
+}
+
+.installation-card input:focus,
+.installation-card select:focus,
+.installation-card textarea:focus {
+
+  background: #ffffff;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59,130,246,0.15);
+  outline: none;
+
+}
+
+.installation-card input:focus {
+  border-color: #2563eb;
+  outline: none;
+}
+
+/* Buttons */
+.installation-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.cancel-btn {
+
+  background: #f1f5f9;
+  padding: 9px 16px;
+  border-radius: 8px;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+
+}
+
+.cancel-btn:hover {
+  background: #e2e8f0;
+}
+
+.installation-actions button[type="submit"] {
+
+  background: #2563eb;
+  color: white;
+  padding: 9px 18px;
+  border-radius: 8px;
+  border: none;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+
+}
+
+.installation-actions button[type="submit"]:hover {
+  background: #1d4ed8;
+}
+
+.cancel-btn:hover {
+  background: #e2e8f0;
+}
+
+.installation-actions button[type="submit"] {
+  background: linear-gradient(135deg, #2a5298, #2a5298);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+.installation-actions button[type="submit"]:hover {
+  opacity: 0.9;
+}
+
+/* Animation */
+@keyframes scaleIn {
+
+  from {
+    transform: translateY(10px) scale(0.97);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+
+}
+.installation-summary {
+  margin-top: 16px;
+  padding: 14px;
+  background: #f1f5f9;
+  border-radius: 10px;
+  font-size: 14px;
+  color: #334155;
+  border: 1px solid #e2e8f0;
+}
+
+.installation-summary strong {
+  color: #0f172a;
+}
+.installation-card label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #475569;
+  margin-bottom: 4px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 8px;
+}

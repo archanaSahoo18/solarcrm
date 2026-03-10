@@ -1,0 +1,47 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 28px;
+  background: #111827;
+  color: white;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.navbarLogo {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.navbarActions {
+  display: flex;
+  gap: 12px;
+}
+
+.navButton {
+  background: #1f2937;
+  color: #e5e7eb;
+  border: 1px solid #374151;
+  padding: 6px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.navButton:hover {
+  background: #374151;
+  color: white;
+}
+
+.primaryButton {
+  background: #2563eb;
+  border: none;
+  color: white;
+}
+
+.primaryButton:hover {
+  background: #1d4ed8;
+}

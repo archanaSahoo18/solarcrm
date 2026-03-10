@@ -1,0 +1,126 @@
+/* Container adjustments */
+.usersPage {
+  animation: fadeIn 0.5s ease-out;
+}
+
+.usersHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.usersHeader h2 {
+  font-size: 24px;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0;
+}
+
+/* Table Styling */
+.usersTableWrap {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.usersTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+
+.usersTable th {
+  background: #f8fafc;
+  color: #64748b;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  padding: 16px 20px;
+  text-align: left;
+}
+
+.usersTable td {
+  padding: 16px 20px;
+  color: #334155;
+  border-bottom: 1px solid #f1f5f9;
+  transition: background 0.2s ease;
+}
+
+.usersTable tr:hover td {
+  background: #f1f7ff; /* Subtle highlight on hover */
+}
+
+/* Role Badges */
+.roleBadge {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.roleBadge.admin {
+  background: #eef2ff;
+  color: #4f46e5;
+  border: 1px solid #c7d2fe;
+}
+
+.roleBadge.user {
+  background: #f0fdf4;
+  color: #16a34a;
+  border: 1px solid #bbf7d0;
+}
+
+/* Action Buttons */
+.actionBtns {
+  display: flex;
+  gap: 8px;
+}
+
+.dangerBtn {
+  background: #fff;
+  border: 1px solid #fca5a5;
+  color: #ef4444;
+  padding: 8px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.dangerBtn:hover {
+  background: #ef4444;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+}
+
+.backBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #f1f5f9;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 10px;
+  color: #475569;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.backBtn:hover {
+  background: #e2e8f0;
+  color: #1e293b;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

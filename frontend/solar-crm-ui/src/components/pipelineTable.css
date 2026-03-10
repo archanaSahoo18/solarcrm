@@ -1,0 +1,395 @@
+/* ================= WRAPPER ================= */
+
+.tableWrap{
+  width:100%;
+  padding:20px;
+  font-size:14px;
+}
+
+/* ================= TOOLBAR ================= */
+
+.tableToolbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin-bottom:15px;
+}
+
+.tableSearch{
+  padding:8px 10px;
+  border:1px solid #ddd;
+  border-radius:6px;
+  width:250px;
+  font-size:13px;
+}
+
+.tableSelect{
+  padding:8px 10px;
+  border:1px solid #ddd;
+  border-radius:6px;
+  font-size:13px;
+}
+
+.downloadBtn{
+  background:#2563eb;
+  color:white;
+  border:none;
+  padding:8px 14px;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.downloadBtn:hover{
+  background:#1d4ed8;
+}
+
+/* ================= TABLE CARD ================= */
+
+.tableCard{
+  background:white;
+  border-radius:12px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.05);
+  overflow:hidden;
+}
+
+/* ================= SCROLL AREA ================= */
+
+.tableScroll{
+  width:100%;
+  overflow-x:auto;
+  max-height:520px;
+  overflow-y:auto;
+}
+
+/* ================= TABLE ================= */
+
+.crmTable{
+  width:100%;
+  min-width:1100px;
+  border-collapse:collapse;
+}
+
+.crmTable th{
+  padding:12px 10px;
+  font-size:12px;
+  font-weight:600;
+  color:#475569;
+  text-align:left;
+  text-transform:uppercase;
+  letter-spacing:0.5px;
+
+  position:sticky;
+  top:0;
+  background:white;
+  z-index:2;
+  box-shadow:0 2px 4px rgba(0,0,0,0.05);
+}
+
+.crmTable td{
+  padding:10px;
+  font-size:13px;
+  border-top:1px solid #f1f5f9;
+}
+
+.crmTable tbody tr:hover{
+  background:#f8fafc;
+}
+
+/* ================= NAME CELL ================= */
+
+.nameCell{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.avatarSmall{
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  background:#2563eb;
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:600;
+}
+
+.nameText{
+  font-weight:600;
+  font-size:13px;
+}
+
+.subText{
+  font-size:11px;
+  color:#64748b;
+}
+
+/* ================= OWNER ================= */
+
+.ownerBox{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:12px;
+}
+
+.ownerAvatar{
+  width:28px;
+  height:28px;
+  border-radius:50%;
+  background:#6366f1;
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:12px;
+}
+
+/* ================= STAGE BADGE ================= */
+
+.badgeStage{
+  padding:3px 8px;
+  border-radius:12px;
+  font-size:10px;
+  font-weight:600;
+}
+
+.b-identification{background:#dbeafe;color:#1e40af;}
+.b-documents{background:#fef3c7;color:#92400e;}
+.b-finance{background:#ede9fe;color:#5b21b6;}
+.b-installation{background:#d1fae5;color:#065f46;}
+.b-contract{background:#ffe4e6;color:#9f1239;}
+.b-completed{background:#cffafe;color:#155e75;}
+
+/* ================= PROGRESS DOTS ================= */
+
+.stageProgress{
+  display:flex;
+  gap:5px;
+}
+
+.progressDot{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:#d1d5db;
+}
+
+.progressDot.active{
+  background:#22c55e;
+}
+
+/* ================= PHONE ================= */
+
+.phoneActions{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.phoneLink{
+  color:#2563eb;
+  text-decoration:none;
+  font-size:12px;
+}
+
+.phoneLink:hover{
+  text-decoration:underline;
+}
+
+.whatsappLink{
+  font-size:18px;
+  text-decoration:none;
+}
+
+/* ================= ACTION BUTTONS ================= */
+
+.actionsRow{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+}
+
+.actionsRow button{
+  font-size:11px;
+  padding:4px 8px;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+}
+
+.btnView{background:#2563eb;color:white;}
+.btnDocs{background:#f59e0b;color:white;}
+.btnFinance{background:#7c3aed;color:white;}
+.btnInstall{background:#10b981;color:white;}
+.btnContract{background:#f97316;color:white;}
+.btnComplete{background:#06b6d4;color:white;}
+.btnAssign{background:#6366f1;color:white;}
+.btnFollowUp{background:#6366f1;color:white;}
+
+/* ================= PAGINATION ================= */
+
+.pagination{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:15px;
+  margin-top:20px;
+}
+
+.pagination button{
+  background:#2563eb;
+  color:white;
+  border:none;
+  padding:5px 12px;
+  border-radius:6px;
+  cursor:pointer;
+  font-size:12px;
+}
+
+.pagination button:disabled{
+  background:#cbd5f5;
+}
+
+/* ================= PIPELINE SUMMARY ================= */
+
+.pipelineSummary{
+  display:flex;
+  gap:12px;
+  margin-bottom:16px;
+  flex-wrap:wrap;
+}
+
+.pipelineStat{
+  background:white;
+  padding:6px 12px;
+  border-radius:10px;
+  box-shadow:0 2px 6px rgba(0,0,0,0.08);
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:12px;
+  cursor:pointer;
+}
+
+.pipelineStat.active{
+  border:2px solid #2563eb;
+}
+
+/* ================= MODAL ================= */
+
+.modalOverlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.45);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+}
+
+.modalContent{
+  background:white;
+  padding:25px;
+  border-radius:16px;
+  width:420px;
+  max-width:90%;
+  box-shadow:0 20px 40px rgba(0,0,0,0.2);
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.modalContent input,
+.modalContent textarea{
+  padding:10px;
+  border-radius:8px;
+  border:1px solid #e2e8f0;
+}
+
+.modalActions{
+  display:flex;
+  gap:10px;
+  margin-top:10px;
+}
+
+.modalActions button{
+  padding:8px 14px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.modalActions button:first-child{
+  background:#6366f1;
+  color:white;
+}
+
+.modalActions button:last-child{
+  background:#e2e8f0;
+}
+
+/* ================= FILE PREVIEW ================= */
+
+.filePreview{
+  margin-top:6px;
+}
+
+.filePreview img{
+  width:80px;
+  height:80px;
+  object-fit:cover;
+  border-radius:8px;
+  border:1px solid #e2e8f0;
+}
+
+/* ================= DOCUMENT VIEWER ================= */
+
+.viewerModal{
+  background:white;
+  padding:25px;
+  border-radius:16px;
+  width:70%;
+  max-width:900px;
+  box-shadow:0 20px 40px rgba(0,0,0,0.2);
+}
+
+.viewerContent{
+  margin-top:10px;
+  display:flex;
+  justify-content:center;
+}
+
+.viewerContent img{
+  max-width:100%;
+  max-height:500px;
+}
+
+.closeBtn{
+  margin-top:15px;
+  background:#0f172a;
+  color:white;
+  padding:10px 16px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+/* Reset Filter Button */
+.resetFilter{
+  margin-bottom:10px;
+  padding:6px 12px;
+  border:none;
+  border-radius:6px;
+  background:#e2e8f0;
+  color:#334155;
+  font-size:12px;
+  cursor:pointer;
+  transition:0.2s;
+}
+
+.resetFilter:hover{
+  background:#cbd5e1;
+}

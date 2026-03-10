@@ -1,0 +1,92 @@
+.notificationWrapper {
+  position: relative;
+}
+
+.bellBtn {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  padding: 6px; /* Reduced from 10px */
+  border-radius: 8px; /* Slightly tighter radius */
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.notificationBadge {
+  position: absolute;
+  top: -4px; /* Adjusted for smaller button */
+  right: -4px;
+  background: red; /* Kept original color */
+  color: white;
+  font-size: 10px; /* Reduced from 11px */
+  font-weight: 700;
+  border-radius: 50%;
+  height: 15px; /* Shrunk from 18px */
+  min-width: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid #fff; /* Added white stroke to keep it clean while small */
+}
+
+.notificationDropdown {
+  position: absolute;
+  right: 0;
+  top: 42px; /* Reduced from 55px */
+  width: 280px; /* Slimmed from 320px */
+  max-height: 350px; /* Reduced from 400px */
+  overflow-y: auto;
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+  z-index: 999;
+  margin-top: 6px;
+  padding: 6px; /* Added internal padding to keep items away from edges */
+}
+
+/* Scrollbar styling to match the compact look */
+.notificationDropdown::-webkit-scrollbar {
+  width: 4px;
+}
+.notificationDropdown::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+.notificationItem {
+  padding: 8px; /* Reduced from 10px */
+  border-radius: 8px;
+  margin-bottom: 4px; /* Reduced from 10px for density */
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.notificationItem:last-child {
+  margin-bottom: 0;
+}
+
+.notificationItem.unread {
+  background: #fff7ed; /* Kept original color */
+  border-left: 3px solid #f59e0b; /* Slightly thinner indicator */
+}
+
+.notificationItem.read {
+  background: #f8fafc;
+  opacity: 0.8;
+}
+
+.notificationItem p {
+  margin: 0;
+  font-size: 12px; /* Reduced for 80% look */
+  line-height: 1.4;
+}
+
+.emptyMsg {
+  color: #94a3b8;
+  font-size: 12px;
+  text-align: center;
+  padding: 15px 0;
+}

@@ -1,0 +1,52 @@
+.assignOverlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.35);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:2000;
+}
+
+.assignCard{
+  background:#fff;
+  padding:25px;
+  border-radius:10px;
+  width:320px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.15);
+}
+
+.assignCard h3{
+  margin-bottom:15px;
+}
+
+.assignCard select{
+  width:100%;
+  padding:8px;
+  border-radius:6px;
+  border:1px solid #ddd;
+}
+
+.assignActions{
+  margin-top:20px;
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
+}
+
+.btnCancel{
+  background:#eee;
+  border:none;
+  padding:7px 12px;
+  border-radius:6px;
+  cursor:pointer;
+}
+
+.btnAssign{
+  background:#6366f1;
+  color:white;
+  border:none;
+  padding:7px 12px;
+  border-radius:6px;
+  cursor:pointer;
+}

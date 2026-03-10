@@ -1,0 +1,51 @@
+version: "3.8"
+
+services:
+  mysql:
+    image: mysql:8
+    container_name: solarcrm-mysql
+    environment:
+      # This creates the schema on the first run
+      MYSQL_DATABASE: solarcrm_dev
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build: ./backend/solarcrm
+    container_name: solarcrm-backend
+     restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      # Points to the 'mysql' service and the 'solarcrm_dev' database
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/solarcrm_dev?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+      # Activates your dev profile settings
+      - SPRING_PROFILES_ACTIVE=dev
+    volumes:
+      - ./dev-uploads:/opt/solarcrm/dev-uploads
+
+  frontend:
+    build: ./frontend/solar-crm-ui
+    container_name: solarcrm-frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    environment:
+      - REACT_APP_API_URL=http://localhost:8080
+
+volumes:
+  mysql-data:

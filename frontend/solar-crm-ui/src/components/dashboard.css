@@ -1,0 +1,201 @@
+/* Dashboard Main Container */
+.dashboardContainer {
+  padding: 15px 20px; /* Reduced from 30px */
+  background: #f8fafc;
+  min-height: 100vh;
+  animation: fadeIn 0.6s ease-out;
+}
+
+.dashboardTitle {
+  font-size: 20px; /* Reduced from 26px */
+  font-weight: 800;
+  margin-bottom: 20px; /* Reduced from 30px */
+  color: #1e293b;
+  letter-spacing: -0.5px;
+}
+
+/* ================= STATS GRID ================= */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px; /* Reduced from 20px */
+  margin-bottom: 20px;
+}
+
+.statCard {
+  background: #ffffff;
+  border-radius: 12px; /* Tightened from 20px */
+  padding: 16px; /* Reduced from 24px */
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.statCard h4 {
+  font-size: 12px; /* Reduced from 14px */
+  font-weight: 600;
+  color: #64748b;
+  margin: 0;
+}
+
+.statCard p {
+  font-size: 22px; /* Reduced from 28px */
+  font-weight: 800;
+  color: #0f172a;
+  margin: 8px 0 0 0;
+}
+
+/* ================= FINANCE SUMMARY ================= */
+.financeSummary {
+  display: flex;
+  justify-content: space-around;
+  padding: 15px; /* Reduced from 30px */
+  border-radius: 16px; /* Reduced from 24px */
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.financeSummary p {
+  font-size: 20px; /* Reduced from 26px */
+  background: linear-gradient(to right, #0f172a, #334155);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ================= LEADERBOARD ================= */
+.leaderboardCard {
+  background: #ffffff;
+  padding: 18px; /* Reduced from 28px */
+  border-radius: 16px; /* Reduced from 24px */
+  border: 1px solid #e2e8f0;
+}
+
+.leaderRow {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px; /* Reduced from 14px */
+  border-radius: 10px;
+}
+
+.rank {
+  background: #f1f5f9;
+  width: 24px; /* Reduced from 28px */
+  height: 24px;
+  border-radius: 6px;
+  font-size: 11px; /* Reduced from 12px */
+  margin-right: 12px;
+}
+
+.leaderRevenue {
+  font-size: 12px;
+   color: #059669;
+  font-weight: 700;
+   background: #ecfdf5;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+
+/* ================= MODAL & MISC ================= */
+.followUpContent {
+  border-radius: 16px;
+  padding: 20px; /* Reduced from 32px */
+}
+
+.iconCircle {
+  width: 34px; /* Reduced from 42px */
+  height: 34px;
+  border-radius: 10px;
+}
+
+.dashboardHeader{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  margin-bottom:20px;
+  position:relative;
+}
+
+.dashboardSubtitle {
+  font-size: 12px; /* Reduced from 14px */
+}
+
+.headerActions {
+    display:flex;
+  align-items:center;
+  gap:15px;
+  position:relative;
+}
+
+.markDoneBtn{
+margin-top:6px;
+padding:6px 10px;
+border:none;
+border-radius:6px;
+background:#22c55e;
+color:white;
+font-size:12px;
+cursor:pointer;
+}
+
+.markDoneBtn:hover{
+background:#16a34a;
+}
+
+
+/* Background overlay */
+.followUpOverlay{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.45);
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:9999;
+}
+
+/* Modal box */
+.followUpModal{
+background:white;
+padding:25px;
+border-radius:14px;
+width:420px;
+max-height:70vh;
+overflow-y:auto;
+box-shadow:0 20px 40px rgba(0,0,0,0.25);
+animation:fadeIn 0.25s ease;
+}
+
+/* Followup list item */
+.followUpItem{
+padding:10px;
+border-bottom:1px solid #eee;
+margin-bottom:10px;
+}
+
+/* Button */
+.markDoneBtn{
+margin-top:6px;
+padding:6px 10px;
+border:none;
+border-radius:6px;
+background:#22c55e;
+color:white;
+font-size:12px;
+cursor:pointer;
+}
+
+.markDoneBtn:hover{
+background:#16a34a;
+}
+
+@keyframes fadeIn{
+from{opacity:0; transform:scale(0.95);}
+to{opacity:1; transform:scale(1);}
+}

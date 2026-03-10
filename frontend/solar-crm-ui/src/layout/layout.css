@@ -1,0 +1,82 @@
+/* MAIN LAYOUT */
+.layout {
+  display: flex;
+  min-height: 100vh;
+  background: #f3f6fb; /* Original background kept */
+}
+
+/* MAIN CONTENT AREA */
+.mainContent {
+  flex: 1;
+  /* Space for floating sidebar - Reduced from 250px */
+  margin-left: 210px; 
+  
+  padding: 12px 18px; /* Reduced from 24px 28px */
+
+  transition: margin-left .35s ease;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 0;
+}
+
+/* when sidebar collapses */
+.mainContent.collapsed {
+  margin-left: 80px; /* Reduced from 120px */
+}
+
+/* PAGE WRAPPER (CONTENT CARD) */
+.pageWrapper {
+  background: #ffffff;
+  padding: 16px; /* Reduced from 24px */
+  border-radius: 14px; /* Reduced from 22px for a sharper look */
+  
+  width: 100%;
+  max-width: 1600px; /* Increased max-width to allow more "spread" */
+  
+  margin: 0 auto;
+
+  /* Original shadow kept */
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.05),
+    inset 0 1px 0 rgba(255,255,255,0.4);
+
+  overflow-x: auto;
+  animation: fadeSlide .35s ease;
+}
+
+/* Horizontal scroll inside content - original styling kept */
+.pageWrapper {
+  scrollbar-width: thin;
+  scrollbar-color: #d1d5db transparent;
+}
+
+/* Chrome scrollbar - original styling kept */
+.pageWrapper::-webkit-scrollbar {
+  height: 6px; /* Slightly thinner from 8px */
+}
+
+.pageWrapper::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.pageWrapper::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 6px;
+}
+
+.pageWrapper::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+/* entry animation - original kept */
+@keyframes fadeSlide {
+  from {
+    opacity: 0;
+    transform: translateY(10px); /* Slightly less movement */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
