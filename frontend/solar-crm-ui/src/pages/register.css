@@ -1,0 +1,146 @@
+.wide-register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;
+  padding: 40px 20px;
+  background: #f4f7fe; /* Light dashbaord background */
+  animation: fadeIn 0.5s ease-out;
+}
+
+.register-card-wide {
+  background: #ffffff;
+  padding: 45px;
+  border-radius: 24px;
+  width: 100%;
+  max-width: 850px; /* Increased width like Add Customer */
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  animation: cardSlideUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.register-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.register-header h2 {
+  font-size: 28px;
+  font-weight: 700;
+  background: linear-gradient(to right, #1e3c72, #6a11cb);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 8px;
+}
+
+.register-header p {
+  color: #a3aed0;
+  font-size: 15px;
+}
+
+/* Grid Layout for Form Fields */
+.register-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two columns */
+  gap: 25px;
+  margin-bottom: 35px;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.inputGroup label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #2b3674;
+  margin-left: 4px;
+}
+
+.inputGroup input, 
+.inputGroup select {
+  padding: 14px 18px;
+  border-radius: 14px;
+  border: 2px solid #e0e5f2;
+  font-size: 15px;
+  background: #f9fafb;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.inputGroup input:focus, 
+.inputGroup select:focus {
+  border-color: #4f46e5;
+  background: #fff;
+  box-shadow: 0 8px 20px rgba(79, 70, 229, 0.08);
+}
+
+.req {
+  color: #ef4444;
+}
+
+/* Footer & Button */
+.register-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.register-btn {
+  width: 100%;
+  max-width: 300px;
+  padding: 16px;
+  border-radius: 14px;
+  border: none;
+  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+  color: white;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 20px rgba(30, 60, 114, 0.2);
+}
+
+.register-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 25px rgba(30, 60, 114, 0.3);
+}
+
+.switchText {
+  font-size: 14px;
+  color: #718096;
+}
+
+.link {
+  color: #4f46e5;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .register-form-grid {
+    grid-template-columns: 1fr; /* Stack on mobile */
+  }
+  .register-card-wide {
+    padding: 30px 24px;
+  }
+}
+
+@keyframes cardSlideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

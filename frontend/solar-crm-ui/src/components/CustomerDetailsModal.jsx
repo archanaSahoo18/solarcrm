@@ -60,6 +60,22 @@ useEffect(() => {
   const inst = data?.installation;
   const con = data?.contract;
 
+  console.log("FULL CUSTOMER DETAILS =>", data);
+console.log("DOCUMENT =>", doc);
+console.log("AADHAR =>", doc?.aadharFile);
+console.log("PAN =>", doc?.panCardFile);
+console.log("ELECTRICITY =>", doc?.electricityBillFile);
+console.log("AGREEMENT =>", doc?.agreementFile);
+console.log("INSTALLATION PHOTO =>", inst?.photoUrl);
+console.log("CONTRACT FILE =>", con?.fileUrl);
+
+
+const getDocFileUrl = (fileName, customerId) =>
+  `${process.env.REACT_APP_FILE_URL}/files/${customerId}/${encodeURIComponent(fileName)}`;
+
+const getCommonFileUrl = (fileName) =>
+  `${process.env.REACT_APP_FILE_URL}/files/${encodeURIComponent(fileName)}`;
+
   return (
     <div className="modalOverlay" onClick={onClose}>
       <div className="modalCard" onClick={(e) => e.stopPropagation()}>
@@ -99,90 +115,108 @@ useEffect(() => {
                 <div className="muted">No documents uploaded.</div>
               ) : (
               <ul className="list">
-
 <li>
-Aadhar:
-{doc.aadharFile ? (
-  <button
-    className="viewBtn"
-    onClick={() =>
-      setViewFile({
-        url: `/uploads/${data.id}/${doc.aadharFile}`,
-        name: "Aadhar Card"
-      })
-    }
-  >
-    View
-  </button>
-) : " Not uploaded"}
+  Aadhar:
+  {doc?.aadharFile ? (
+    <button
+      className="viewBtn"
+      onClick={() =>
+        setViewFile({
+          url: getDocFileUrl(doc.aadharFile,data.id),
+          name: "Aadhar Card"
+        })
+      }
+    >
+      View
+    </button>
+  ) : " Not uploaded"}
 </li>
 
 <li>
-PAN Card:
-{doc.panCardFile ? (
-  <button
-    className="viewBtn"
-    onClick={() =>
-      setViewFile({
-        url: `/uploads/${data.id}/${doc.panCardFile}`,
-        name: "PAN Card"
-      })
-    }
-  >
-    View
-  </button>
-) : " Not uploaded"}
+  PAN Card:
+  {doc?.panCardFile ? (
+    <button
+      className="viewBtn"
+      onClick={() =>
+        setViewFile({
+          url: getDocFileUrl(doc.panCardFile,data.id),
+          name: "PAN Card"
+        })
+      }
+    >
+      View
+    </button>
+  ) : " Not uploaded"}
 </li>
 
 <li>
-Electricity Bill:
-{doc.electricityBillFile ? (
-  <button
-    className="viewBtn"
-    onClick={() =>
-      setViewFile({
-        url: `/uploads/${data.id}/${doc.electricityBillFile}`,
-        name: "Electricity Bill"
-      })
-    }
-  >
-    View
-  </button>
-) : " Not uploaded"}
+  Electricity Bill:
+  {doc?.electricityBillFile ? (
+    <button
+      className="viewBtn"
+      onClick={() =>
+        setViewFile({
+          url: getDocFileUrl(doc.electricityBillFile,data.id),
+          name: "Electricity Bill"
+        })
+      }
+    >
+      View
+    </button>
+  ) : " Not uploaded"}
 </li>
 
 <li>
-Agreement:
-{doc.agreementFile ? (
-  <button
-    className="viewBtn"
-    onClick={() =>
-      setViewFile({
-        url: `/uploads/${data.id}/${doc.agreementFile}`,
-        name: "Agreement"
-      })
-    }
-  >
-    View
-  </button>
-) : " Not uploaded"}
+  Agreement:
+  {doc?.agreementFile ? (
+    <button
+      className="viewBtn"
+      onClick={() =>
+        setViewFile({
+          url: getDocFileUrl(doc.agreementFile,data.id),
+          name: "Agreement"
+        })
+      }
+    >
+      View
+    </button>
+  ) : " Not uploaded"}
 </li>
 
 <li>
-Installation Photo:
-{doc.installationPhoto ? (
-  <button
-    className="viewBtn"
-    onClick={() =>
-      setViewFile({
-        url: `/uploads/${data.id}/${doc.installationPhoto}`,
-        name: "Installation Photo"
-      })
-    }
-  >
-    View
-  </button>
-) : " Not uploaded"}
+  Installation Photo:
+  {inst?.photoUrl ? (
+    <button
+      className="viewBtn"
+      onClick={() =>
+        setViewFile({
+          // CHANGE: Use getDocFileUrl so the customerId is included in the path
+          url: getDocFileUrl(inst.photoUrl, data.id), 
+          name: "Installation Photo"
+        })
+      }
+    >
+      View
+    </button>
+  ) : " Not uploaded"}
+</li>
+
+<li>
+  Contract:
+  {con?.fileUrl ? (
+    <button
+      className="viewBtn"
+      onClick={() =>
+        setViewFile({
+          // CHANGE: Use getDocFileUrl here as well
+          url: getDocFileUrl(con.fileUrl, data.id),
+          name: "Contract"
+        })
+      }
+    >
+      View
+    </button>
+  ) : " Not uploaded"}
 </li>
 
 </ul>
@@ -216,18 +250,37 @@ Installation Photo:
               )}
             </div>
 
-            <div className="section">
-              <h3>Contract</h3>
-              {!con ? (
-                <div className="muted">Contract not added.</div>
-              ) : (
-                <ul className="list">
-                  <li>Agreement Number: <b>{con.agreementNumber || "-"}</b></li>
-                  <li>Contract Date: <b>{con.contractDate || "-"}</b></li>
-                  <li>Status: <b>{con.finalStatus || "-"}</b></li>
-                </ul>
-              )}
-            </div>
+    <div className="section">
+  <h3>Contract</h3>
+
+  {!con ? (
+    <div className="muted">Contract not added.</div>
+  ) : (
+    <ul className="list">
+
+      <li>
+        Contract Number:
+        <b>{con.contractNumber || "-"}</b>
+      </li>
+
+      <li>
+        Signed Date:
+        <b>{con.signedDate || "-"}</b>
+      </li>
+
+      <li>
+        Total Price:
+        <b>{con.totalPrice ?? "-"}</b>
+      </li>
+
+      <li>
+        System Size (KW):
+        <b>{con.systemSize ?? "-"}</b>
+      </li>
+
+    </ul>
+  )}
+</div>
 
 <div className="section">
   <h3>Activity Timeline</h3>

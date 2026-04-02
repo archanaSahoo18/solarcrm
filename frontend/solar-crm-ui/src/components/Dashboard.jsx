@@ -47,6 +47,8 @@ function Dashboard() {
       .catch(err => {
   console.error("API ERROR:", err.response?.data || err.message);
 });
+
+console.log(overdueCount);
   };
 
 

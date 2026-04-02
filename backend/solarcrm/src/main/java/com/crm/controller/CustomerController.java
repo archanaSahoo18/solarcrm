@@ -1,5 +1,6 @@
 package com.crm.controller;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -18,14 +19,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.crm.dto.CustomerResponse;
 import com.crm.entity.Activity;
 import com.crm.entity.Customer;
 import com.crm.entity.User;
+import com.crm.enums.Gender;
+import com.crm.enums.Stage;
 import com.crm.repository.ActivityRepository;
+import com.crm.repository.CustomerRepository;
 import com.crm.repository.UserRepository;
 import com.crm.service.CustomerService;
+import com.crm.service.DocumentService;
 import com.crm.service.ExcelExportService;
 
 import jakarta.validation.Valid;
@@ -40,17 +46,19 @@ public class CustomerController {
 	private final ActivityRepository activityRepository;
 	private final UserRepository userRepository;
 	private final ExcelExportService excelExportService;
+	private final CustomerRepository customerRepository;
+	private final DocumentService documentService;
 	
 
-
-
-
 	public CustomerController(CustomerService service, ActivityRepository activityRepository,
-			UserRepository userRepository, ExcelExportService excelExportService) {
+			UserRepository userRepository, ExcelExportService excelExportService, CustomerRepository customerRepository,
+			DocumentService documentService) {
 		this.service = service;
 		this.activityRepository = activityRepository;
 		this.userRepository = userRepository;
 		this.excelExportService = excelExportService;
+		this.customerRepository = customerRepository;
+		this.documentService = documentService;
 	}
 
 	@PostMapping
@@ -129,6 +137,62 @@ public class CustomerController {
 	        @PathVariable Long userId) {
 
 	    return service.assignCustomer(id, userId);
+	}
+	
+	
+	@PostMapping("/create-with-documents")
+	@PreAuthorize("hasAnyRole('ADMIN','USER')")
+	public ResponseEntity<?> createCustomerWithDocuments(
+	        @RequestParam String name,
+	        @RequestParam String phone,
+	        @RequestParam String address,
+	        @RequestParam String gender,
+	        @RequestParam String email,
+	        @RequestParam MultipartFile aadhar,
+	        @RequestParam MultipartFile panCard,
+	        @RequestParam MultipartFile sitePhoto,
+	        @RequestParam MultipartFile bankPassbook,
+	        @RequestParam MultipartFile electricBill,
+	        @RequestParam MultipartFile agreement,
+	        @RequestParam MultipartFile customerPhoto,
+	        Authentication authentication
+	) {
+		
+		
+		 String username = authentication.getName();
+
+	    User user = userRepository.findByUsername(username)
+	            .orElseThrow(() -> new RuntimeException("User not found"));
+
+	    Customer customer = new Customer();
+
+	    customer.setName(name);
+	    customer.setPhone(phone);
+	    customer.setAddress(address);
+	    customer.setGender(Gender.valueOf(gender.toUpperCase())); 
+	    customer.setEmail(email);
+	    customer.setOwner(user);
+	    customer.setStage(Stage.DOCUMENTS);
+
+	    customerRepository.save(customer);
+
+	    try {
+			documentService.saveDocuments(
+			    customer.getId(),
+			    aadhar,
+			    panCard,
+			    sitePhoto,
+			    bankPassbook,
+			    electricBill,
+			    agreement,
+			    customerPhoto
+			);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	    return ResponseEntity.ok("Customer created");
 	}
 
 }

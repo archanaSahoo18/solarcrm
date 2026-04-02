@@ -4,7 +4,6 @@ import Swal from "sweetalert2";
 import "./pipelineTable.css";
 
 const stages = [
-  "IDENTIFICATION",
   "DOCUMENTS",
   "FINANCE",
   "INSTALLATION",
@@ -13,7 +12,6 @@ const stages = [
 ];
 
 const stageOrder = [
-  "IDENTIFICATION",
   "DOCUMENTS",
   "FINANCE",
   "INSTALLATION",
@@ -35,7 +33,6 @@ const getStepClass = (current, step) => {
 };
 
 const stageClasses = {
-  IDENTIFICATION:"b-identification",
   DOCUMENTS:"b-documents",
   FINANCE:"b-finance",
   INSTALLATION:"b-installation",
@@ -48,11 +45,10 @@ const badgeClass = (stage) => `badgeStage ${stageClasses[stage] || ""}`;
 export default function PipelineTable({
   onOpenCustomer,
   onAddFinance,
-  onUploadDocs,
   onAddContract,
   onAddInstallation,
-   onAssignLead,
-   onAddFollowUp
+  onAssignLead,
+  onAddFollowUp
 }) {
 
   const [customers,setCustomers] = useState([]);
@@ -119,7 +115,6 @@ const downloadExcel = async () => {
 
 const stageCounts = useMemo(() => {
   const counts = {
-    IDENTIFICATION: 0,
     DOCUMENTS: 0,
     FINANCE: 0,
     INSTALLATION: 0,
@@ -157,6 +152,21 @@ const stageCounts = useMemo(() => {
       });
   };
 
+
+  const canMoveToContract = (installation) => {
+  return (
+    installation &&
+    installation.status === "COMPLETED" &&
+    installation.photoUrl
+  );
+};
+
+const canCompleteProject = (contract) => {
+  return contract && contract.fileUrl;
+};
+
+
+
   return (
     <div className="tableWrap">
 
@@ -186,10 +196,9 @@ const stageCounts = useMemo(() => {
 
       </div>
 
-      <button
+<button
   className="resetFilter"
-  onClick={()=>setStageFilter("ALL")}
->
+  onClick={()=>setStageFilter("ALL")}>
   Show All
 </button>
 
@@ -238,6 +247,9 @@ const stageCounts = useMemo(() => {
           <tbody>
 
             {filtered.map(c=>{
+
+              console.log("Contract file =>", c.contract?.fileUrl);
+console.log("File URL =>", `${process.env.REACT_APP_FILE_URL}/files/${c.contract?.fileUrl}`);
 
               const avatarColor = colors[c.id % colors.length];
 
@@ -343,8 +355,7 @@ const stageCounts = useMemo(() => {
                   </td>
 
                   <td>
-
-                    <div className="actionsRow">
+ <div className="actionsRow">
 
 {role === "ADMIN" && (
   <button
@@ -378,18 +389,6 @@ const stageCounts = useMemo(() => {
                         View
                       </button>
 
-                      {c.stage==="IDENTIFICATION" && (
-                        <button
-                          className="btnDocs"
-                          onClick={(e)=>{
-                            e.stopPropagation();
-                            onUploadDocs(c.id);
-                          }}
-                        >
-                          Upload Docs
-                        </button>
-                      )}
-
                       {c.stage==="DOCUMENTS" && (
                         <button
                           className="btnFinance"
@@ -402,19 +401,82 @@ const stageCounts = useMemo(() => {
                         </button>
                       )}
 
-                      {c.stage==="FINANCE" && (
-                        <button
-                          className="btnInstall"
-                          onClick={(e)=>{
-                            e.stopPropagation();
-                            onAddInstallation(c.id);
-                          }}
-                        >
-                          Schedule Installation
-                        </button>
-                      )}
+{/* {(c.stage === "INSTALLATION" || c.stage === "CONTRACT") && (
+  <button
+    className="btnContract"
+    disabled={
+      c.stage === "INSTALLATION" && !canMoveToContract(c.installation)
+    }
+    onClick={(e) => {
+      e.stopPropagation();
+      onAddContract(c.id);
+    }}
+  >
+    {c.stage === "CONTRACT"
+      ? c.contract
+        ? "View Contract"
+        : "Add Contract"
+      : !canMoveToContract(c.installation)
+        ? "Complete Installation First"
+        : "Add Contract"}
+  </button>
+)} */}
 
-                      {c.stage==="INSTALLATION" && (
+{/* INSTALLATION BUTTON */}
+{(c.stage === "FINANCE" || c.stage === "INSTALLATION") && (
+  <button
+    className="btnInstall"
+    onClick={(e)=>{
+      e.stopPropagation();
+
+      if(!c.finance){
+        Swal.fire({
+          icon:"warning",
+          title:"Add Finance First"
+        });
+        return;
+      }
+
+      onAddInstallation(c.id);
+    }}
+  >
+    {c.installation
+      ? c.installation.status === "COMPLETED"
+        ? "View Installation"
+        : "Complete Installation"
+      : "Schedule Installation"}
+  </button>
+)}
+
+{(c.stage === "INSTALLATION" || c.stage === "CONTRACT") && (
+  <button
+    className="btnContract"
+    disabled={
+      c.stage === "INSTALLATION" && !canMoveToContract(c.installation)
+    }
+    onClick={(e) => {
+      e.stopPropagation();
+
+      if (c.contract) {
+        window.open(
+          `${process.env.REACT_APP_FILE_URL}/files/${c.contract.fileUrl}`,
+          "_blank"
+        );
+      } else {
+        onAddContract(c.id);
+      }
+    }}
+  >
+    {c.contract
+      ? "View Contract"
+      : c.stage === "INSTALLATION" && !canMoveToContract(c.installation)
+        ? "Complete Installation First"
+        : "Add Contract"}
+  </button>
+)}
+                      {/* {c.stage==="INSTALLATION" &&
+                       c.installation?.status === "COMPLETED" &&
+                         c.installation?.photoUrl && (
                         <button
                           className="btnContract"
                           onClick={(e)=>{
@@ -424,9 +486,11 @@ const stageCounts = useMemo(() => {
                         >
                           Add Contract
                         </button>
-                      )}
+                      )} */}
 
-                      {c.stage==="CONTRACT" && (
+
+
+                      {/* {c.stage==="CONTRACT" && c.contract?.fileUrl && (
                         <button
                           className="btnComplete"
                           onClick={(e)=>{
@@ -436,7 +500,22 @@ const stageCounts = useMemo(() => {
                         >
                           Complete
                         </button>
-                      )}
+                      )} */}
+
+{c.stage === "CONTRACT" && (
+  <button
+    className="btnComplete"
+    disabled={!canCompleteProject(c.contract)}
+    onClick={(e) => {
+      e.stopPropagation();
+      updateStage(c.id, "COMPLETED");
+    }}
+  >
+    {canCompleteProject(c.contract)
+      ? "Mark Completed"
+      : "Upload Contract First"}
+  </button>
+)}
 
                     </div>
 

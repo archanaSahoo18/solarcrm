@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.time.LocalDate;
 
+import com.crm.enums.InstallationStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -26,6 +27,15 @@ public class Installation {
     @OneToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
+    
+    
+
+    @Enumerated(EnumType.STRING)
+    private InstallationStatus status;
+    private String photoUrl;    // NEW
+    private String notes;
+    
+    
 
 	public Long getId() {
 		return id;
@@ -66,6 +76,33 @@ public class Installation {
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
+
+
+
+	public InstallationStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(InstallationStatus status) {
+		this.status = status;
+	}
+
+	public String getPhotoUrl() {
+		return photoUrl;
+	}
+
+	public void setPhotoUrl(String photoUrl) {
+		this.photoUrl = photoUrl;
+	}
+
+	public String getNotes() {
+		return notes;
+	}
+
+	public void setNotes(String notes) {
+		this.notes = notes;
+	}
     
+	
     
 }

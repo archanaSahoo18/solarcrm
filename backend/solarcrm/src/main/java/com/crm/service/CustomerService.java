@@ -7,8 +7,9 @@ import com.crm.enums.Role;
 import com.crm.enums.Stage;
 import com.crm.repository.CustomerRepository;
 import com.crm.repository.UserRepository;
-
+import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -89,24 +90,77 @@ public class CustomerService {
                 .orElseThrow(() -> new RuntimeException("Customer not found"));
     }
     
+//    public Page<CustomerResponse> getCustomersForUser(User user, Pageable pageable) {
+//
+//        Page<Customer> page;
+//
+//        if (user.getRole() == Role.ADMIN) {
+//            page = repository.findAll(pageable);
+//        } else {
+//            page = repository.findByOwnerId(user.getId(), pageable);
+//        }
+//
+//        return page.map(c -> {
+//
+//            CustomerResponse res = new CustomerResponse();
+//
+//            res.setId(c.getId());
+//            res.setName(c.getName());
+//            res.setPhone(c.getPhone());
+//            res.setAddress(c.getAddress());
+//            res.setStage(c.getStage());
+//            res.setOwnerName(
+//                c.getOwner() != null ? c.getOwner().getUsername() : null
+//            );
+//
+//            // IMPORTANT FOR PIPELINE TABLE
+//            res.setFinance(c.getFinance());
+//            res.setInstallation(c.getInstallation());
+//            res.setContract(c.getContract());
+//
+//            return res;
+//        });
+//    }
+    
+    
     public Page<CustomerResponse> getCustomersForUser(User user, Pageable pageable) {
 
+        Pageable sortedPageable = PageRequest.of(
+                pageable.getPageNumber(),
+                pageable.getPageSize(),
+                Sort.by(Sort.Direction.DESC, "createdAt")
+            );
+
+    	
         Page<Customer> page;
 
         if (user.getRole() == Role.ADMIN) {
-            page = repository.findAll(pageable);
+            page = repository.findAll(sortedPageable);
         } else {
-            page = repository.findByOwnerId(user.getId(), pageable);
+            page = repository.findByOwnerId(user.getId(), sortedPageable);
         }
 
-        return page.map(c -> new CustomerResponse(
-                c.getId(),
-                c.getName(),
-                c.getPhone(),
-                c.getAddress(),
-                c.getStage(),
+        return page.map(c -> {
+
+            CustomerResponse res = new CustomerResponse();
+
+            res.setId(c.getId());
+            res.setName(c.getName());
+            res.setPhone(c.getPhone());
+            res.setAddress(c.getAddress());
+            res.setStage(c.getStage());
+            res.setCreatedAt(c.getCreatedAt()); // ⭐ ADD THIS
+
+            res.setOwnerName(
                 c.getOwner() != null ? c.getOwner().getUsername() : null
-        ));
+            );
+
+            res.setFinance(c.getFinance());
+            res.setInstallation(c.getInstallation());
+            res.setContract(c.getContract());
+
+            return res;
+        });
     }
     
     public Customer assignCustomer(Long customerId, Long userId) {

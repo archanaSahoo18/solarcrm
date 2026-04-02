@@ -65,7 +65,20 @@ public class Customer {
     private LeadSource leadSource;
     
     
-    public Long getId() {
+    private String email;
+    
+    
+    
+    
+    public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public Long getId() {
 		return id;
 	}
 
@@ -116,10 +129,17 @@ public class Customer {
 
 
 	@PrePersist
-    public void prePersist() {
-        this.stage = Stage.IDENTIFICATION;
-        this.createdAt = LocalDateTime.now();
-    }
+	public void prePersist() {
+
+	    if (this.stage == null) {
+	        this.stage = Stage.IDENTIFICATION;
+	    }
+
+	    if(this.createdAt == null){
+	        this.createdAt = LocalDateTime.now();
+	    }
+
+	}
 
 	public Document getDocument() {
 		return document;

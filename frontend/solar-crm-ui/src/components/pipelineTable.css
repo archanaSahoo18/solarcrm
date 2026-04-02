@@ -393,3 +393,7 @@
 .resetFilter:hover{
   background:#cbd5e1;
 }
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

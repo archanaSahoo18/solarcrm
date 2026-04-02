@@ -72,9 +72,6 @@ public class DocumentService {
         
         
         
-        document.setInstallationPhoto(
-                saveFile(customerDir, installationPhoto, document.getInstallationPhoto())
-        );
 
         Document savedDoc = documentRepository.save(document);
 
@@ -132,4 +129,70 @@ public class DocumentService {
     public Path getFilePath(Long customerId, String fileName) {
         return Paths.get(properties.getUploadDir(), customerId.toString(), fileName);
     }
+
+	public Document   saveDocuments(Long customerId,
+            MultipartFile aadhar,
+            MultipartFile panCard,
+            MultipartFile sitePhoto,
+            MultipartFile bankPassbook,
+            MultipartFile electricityBill,
+            MultipartFile agreement,
+            MultipartFile customerPhoto)throws IOException  {
+		
+		Customer customer = customerRepository.findById(customerId)
+                .orElseThrow(() -> new RuntimeException("Customer not found"));
+
+        String customerDir = properties.getUploadDir() + "/" + customerId;
+
+        Files.createDirectories(Paths.get(customerDir));
+
+        Document document = documentRepository
+                .findByCustomerId(customerId)
+                .orElse(new Document());
+
+        document.setCustomer(customer);
+
+        document.setAadharFile(
+                saveFile(customerDir, aadhar, document.getAadharFile())
+        );
+
+        document.setPanCardFile(
+                saveFile(customerDir, panCard, document.getPanCardFile())
+        );
+
+        document.setSitePhoto(
+                saveFile(customerDir, sitePhoto, document.getSitePhoto())
+        );
+
+        document.setBankPassbook(
+                saveFile(customerDir, bankPassbook, document.getBankPassbook())
+        );
+
+        document.setElectricityBillFile(
+                saveFile(customerDir, electricityBill, document.getElectricityBillFile())
+        );
+
+        document.setAgreementFile(
+                saveFile(customerDir, agreement, document.getAgreementFile())
+        );
+
+        document.setCustomerPhoto(
+                saveFile(customerDir, customerPhoto, document.getCustomerPhoto())
+        );
+
+        Document savedDoc = documentRepository.save(document);
+
+        activityService.logActivity(
+                customer,
+                "DOCUMENT_UPLOADED",
+                "Customer documents uploaded",
+                SecurityContextHolder.getContext()
+                        .getAuthentication()
+                        .getName()
+        );
+
+        return savedDoc;
+    
+		
+	}
 }

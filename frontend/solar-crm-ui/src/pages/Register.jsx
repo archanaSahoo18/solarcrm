@@ -1,7 +1,7 @@
 import { useState } from "react";
 import api from "../api/api";
 import Swal from "sweetalert2";
-import "./login.css"; // Uses the same CSS file for a unified look
+import "./register.css"; 
 import { useNavigate } from "react-router-dom";
 
 export default function Register() {
@@ -9,24 +9,24 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("USER");
   const [loading, setLoading] = useState(false);
-const [phoneNum, setPhoneNum] = useState("");
+  const [phoneNum, setPhoneNum] = useState("");
 
   const navigate = useNavigate();
 
   const handleRegister = async () => {
-    if (!username || !password ||!phoneNum) {
+    if (!username || !password || !phoneNum) {
       Swal.fire({ icon: "info", title: "Fill in all fields" });
       return;
     }
 
-  if (phoneNum.length !== 10) {
-  Swal.fire({
-    icon: "warning",
-    title: "Invalid Phone Number",
-    text: "Phone number must be exactly 10 digits"
-  });
-  return;
-}
+    if (phoneNum.length !== 10) {
+      Swal.fire({
+        icon: "warning",
+        title: "Invalid Phone Number",
+        text: "Phone number must be exactly 10 digits"
+      });
+      return;
+    }
 
     setLoading(true);
     try {
@@ -34,7 +34,7 @@ const [phoneNum, setPhoneNum] = useState("");
         username, 
         password,
         phoneNum,
-         role 
+        role 
       });
       
       Swal.fire({
@@ -45,7 +45,6 @@ const [phoneNum, setPhoneNum] = useState("");
         showConfirmButton: false
       });
       
-      // Navigate to login after successful registration
       setTimeout(() => navigate("/login"), 2000);
     } catch (err) {
       Swal.fire({
@@ -59,64 +58,67 @@ const [phoneNum, setPhoneNum] = useState("");
   };
 
   return (
-    <div className="registerContainer">
-      <div className="loginCard">
-        <h2>Join Solar CRM</h2>
-        <p className="subtitle">Set up your account to get started</p>
-
-        <div className="inputGroup">
-          <input
-            type="text"
-            placeholder="Choose Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
+    <div className="wide-register-container">
+      <div className="register-card-wide">
+        <div className="register-header">
+          <h2>Create User Account</h2>
+          <p>Register a new member to the Solar CRM platform</p>
         </div>
 
-        <div className="inputGroup">
-  <label style={{ fontSize: "12px", color: "#888" }}>
-  Enter a 10 digit mobile number
-</label>
-  <input
-    type="text"
-    placeholder="Phone Number (10 digits)"
-    value={phoneNum}
-    onChange={(e) => {
-      const value = e.target.value;
+        <div className="register-form-grid">
+          {/* Left Column */}
+          <div className="inputGroup">
+            <label>Username <span className="req">*</span></label>
+            <input
+              type="text"
+              placeholder="Enter unique username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </div>
 
-      // Allow only numbers
-      if (/^\d*$/.test(value)) {
-        setPhoneNum(value);
-      }
-    }}
-    maxLength="10"
-  />
-</div>
+          <div className="inputGroup">
+            <label>Mobile Number <span className="req">*</span></label>
+            <input
+              type="text"
+              placeholder="10 digit mobile number"
+              value={phoneNum}
+              onChange={(e) => {
+                const value = e.target.value;
+                if (/^\d*$/.test(value)) setPhoneNum(value);
+              }}
+              maxLength="10"
+            />
+          </div>
 
-        <div className="inputGroup">
-          <input
-            type="password"
-            placeholder="Create Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+          {/* Right Column */}
+          <div className="inputGroup">
+            <label>Password <span className="req">*</span></label>
+            <input
+              type="password"
+              placeholder="Create a strong password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+
+          <div className="inputGroup">
+            <label>Access Level / Role <span className="req">*</span></label>
+            <select value={role} onChange={(e) => setRole(e.target.value)}>
+              <option value="USER">Standard User</option>
+              <option value="ADMIN">Administrator</option>
+            </select>
+          </div>
         </div>
 
-        <div className="inputGroup">
-          <label style={{ fontSize: '12px', color: '#666', marginLeft: '5px' }}>Account Role</label>
-          <select value={role} onChange={(e) => setRole(e.target.value)}>
-            <option value="USER">Standard User</option>
-            <option value="ADMIN">Administrator</option>
-          </select>
+        <div className="register-footer">
+          <button className="register-btn" onClick={handleRegister} disabled={loading}>
+            {loading ? "Creating Account..." : "Register Now"}
+          </button>
+          <p className="switchText">
+            Already have an account? <span className="link" onClick={() => navigate("/login")}>Sign In</span>
+          </p>
         </div>
-
-        <button onClick={handleRegister} disabled={loading}>
-          {loading ? "Creating Account..." : "Register Now"}
-        </button>
-
-        <p className="switchText">
-          Already have an account? <b onClick={() => navigate("/login")}>Sign In</b>
-        </p>
       </div>
     </div>
   );

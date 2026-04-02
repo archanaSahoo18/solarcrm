@@ -38,6 +38,9 @@ public class SecurityConfig {
         http
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .csrf(csrf -> csrf.disable())
+            .headers(headers -> headers
+                    .frameOptions(frameOptions -> frameOptions.sameOrigin())
+                    )
             .authorizeHttpRequests(auth -> auth
 
                 // Public
@@ -55,6 +58,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/installation/**").hasAnyRole("ADMIN","USER")
                 .requestMatchers("/api/followups/**").hasAnyRole("ADMIN","USER")
                 .requestMatchers("/api/notifications/**").hasAnyRole("ADMIN","USER")
+                .requestMatchers("/files/**").permitAll()
 
                 .anyRequest().authenticated()
             )

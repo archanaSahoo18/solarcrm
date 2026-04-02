@@ -430,28 +430,50 @@
 
 // export default Pipeline;
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PipelineTable from "./PipelineTable";
 import CustomerDetailsModal from "./CustomerDetailsModal";
 import FinanceForm from "./FinanceForm";
 import InstallationForm from "./InstallationForm";
-import DocumentUploadModal from "./DocumentUploadModal";
 import ContractForm from "./ContractForm";
 import { FiFilter, FiActivity } from "react-icons/fi"; // Added icons
 import AssignLeadModal from "./AssignLeadModal";
 import FollowUpModal from "./FollowUpModal";
+import api from "../api/api";
 
 function Pipeline() {
   const [selectedCustomerId, setSelectedCustomerId] = useState(null);
   const [financeCustomerId, setFinanceCustomerId] = useState(null);
-  const [installationCustomerId, setInstallationCustomerId] = useState(null);
-  const [documentCustomerId, setDocumentCustomerId] = useState(null);
   const [contractCustomerId, setContractCustomerId] = useState(null);
   const [refreshKey, setRefreshKey] = useState(0);
   const [assignCustomerId,setAssignCustomerId] = useState(null);
   const [showAssignModal,setShowAssignModal] = useState(false);
 
   const [followUpCustomerId, setFollowUpCustomerId] = useState(null);
+
+
+  const [selectedInstallation, setSelectedInstallation] = useState(null);
+const [selectedCustomer, setSelectedCustomer] = useState(null);
+
+// const handleInstallation = (id, installation) => {
+//   setSelectedCustomer(id);
+//   setSelectedInstallation(installation);
+// };
+
+const [loadingInstallation, setLoadingInstallation] = useState(false);
+
+const handleInstallation = async (id, installation) => {
+  try {
+    setLoadingInstallation(true);
+    setSelectedCustomer(id);
+
+    const res = await api.get(`/installation/${id}`);
+    setSelectedInstallation(res.data);
+
+  } finally {
+    setLoadingInstallation(false);
+  }
+};
 
   const refreshTable = () => {
     setRefreshKey(prev => prev + 1);
@@ -463,25 +485,33 @@ function Pipeline() {
   setShowAssignModal(true);
 };
 
+
+useEffect(() => {
+  const interval = setInterval(() => {
+    refreshTable();
+  }, 30000);
+
+  return () => clearInterval(interval);
+}, []);
+
   return (
     <div className="pipelineContainer">
       <div className="pipelineHeader" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
         <div>
       <h2 className="pageTitle">Customer Pipeline</h2>
-          <p style={{ color: '#64748b', fontSize: '14px', marginTop: '-20px' }}>
+          <p style={{ color: '#64748b', fontSize: '14px', marginTop: '10px' }}>
             <FiActivity style={{ marginRight: '5px' }} />
             Track and move customers through your sales workflow.
           </p>
         </div>
       </div>
-
       <PipelineTable
         key={refreshKey}
         onOpenCustomer={(id) => setSelectedCustomerId(id)}
         onAddFinance={(id) => setFinanceCustomerId(id)}
-        onUploadDocs={(id) => setDocumentCustomerId(id)}
         onAddContract={(id) => setContractCustomerId(id)}
-        onAddInstallation={(id) => setInstallationCustomerId(id)}
+       // onAddInstallation={(id) => setInstallationCustomerId(id)}
+       onAddInstallation={handleInstallation}
          onAssignLead={handleAssignLead}
           onAddFollowUp={(id) => setFollowUpCustomerId(id)} 
       />
@@ -504,7 +534,7 @@ function Pipeline() {
       )}
 
       {/* Installation */}
-      {installationCustomerId && (
+      {/* {installationCustomerId && (
         <InstallationForm
           customerId={installationCustomerId}
           onSuccess={() => {
@@ -513,19 +543,25 @@ function Pipeline() {
           }}
           onCancel={() => setInstallationCustomerId(null)}
         />
-      )}
+      )} */}
 
-      {/* Documents */}
-      {documentCustomerId && (
-        <DocumentUploadModal
-          customerId={documentCustomerId}
-          onSuccess={() => {
-            setDocumentCustomerId(null);
-            refreshTable();
-          }}
-          onCancel={() => setDocumentCustomerId(null)}
-        />
-      )}
+{selectedCustomer && (
+  <InstallationForm
+    customerId={selectedCustomer}
+    existingInstallation={selectedInstallation}
+    onSuccess={() => {
+      setSelectedCustomer(null);
+      setSelectedInstallation(null);
+      refreshTable();
+    }}
+    onCancel={() => {
+      setSelectedCustomer(null);
+      setSelectedInstallation(null);
+    }}
+  />
+)}
+
+  
 
       {/* Contract */}
       {contractCustomerId && (

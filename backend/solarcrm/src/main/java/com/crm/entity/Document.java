@@ -22,6 +22,11 @@ public class Document {
     private String electricityBillFile;
     private String agreementFile;
     private String installationPhoto;
+   
+    private String sitePhoto;
+    private String bankPassbook;
+    private String customerPhoto;
+    
 
     @JsonIgnore
     @OneToOne
@@ -82,6 +87,30 @@ public class Document {
 
 	public void setPanCardFile(String panCardFile) {
 		this.panCardFile = panCardFile;
+	}
+
+	public String getSitePhoto() {
+		return sitePhoto;
+	}
+
+	public void setSitePhoto(String sitePhoto) {
+		this.sitePhoto = sitePhoto;
+	}
+
+	public String getBankPassbook() {
+		return bankPassbook;
+	}
+
+	public void setBankPassbook(String bankPassbook) {
+		this.bankPassbook = bankPassbook;
+	}
+
+	public String getCustomerPhoto() {
+		return customerPhoto;
+	}
+
+	public void setCustomerPhoto(String customerPhoto) {
+		this.customerPhoto = customerPhoto;
 	}
     
     

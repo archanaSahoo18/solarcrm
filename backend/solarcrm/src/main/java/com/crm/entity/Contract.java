@@ -18,14 +18,19 @@ public class Contract {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String agreementNumber;
-    private LocalDate contractDate;
-    private String finalStatus;   // ACTIVE / CLOSED
+
+    private String contractNumber;
+    private LocalDate signedDate;
+    private Double totalPrice;
+    private Double systemSize;
+
 
     @JsonIgnore
     @OneToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
+    
+    private String fileUrl;
 
 	public Long getId() {
 		return id;
@@ -35,28 +40,38 @@ public class Contract {
 		this.id = id;
 	}
 
-	public String getAgreementNumber() {
-		return agreementNumber;
+	
+
+	public String getContractNumber() {
+		return contractNumber;
 	}
 
-	public void setAgreementNumber(String agreementNumber) {
-		this.agreementNumber = agreementNumber;
+	public void setContractNumber(String contractNumber) {
+		this.contractNumber = contractNumber;
 	}
 
-	public LocalDate getContractDate() {
-		return contractDate;
+	public LocalDate getSignedDate() {
+		return signedDate;
 	}
 
-	public void setContractDate(LocalDate contractDate) {
-		this.contractDate = contractDate;
+	public void setSignedDate(LocalDate signedDate) {
+		this.signedDate = signedDate;
 	}
 
-	public String getFinalStatus() {
-		return finalStatus;
+	public Double getTotalPrice() {
+		return totalPrice;
 	}
 
-	public void setFinalStatus(String finalStatus) {
-		this.finalStatus = finalStatus;
+	public void setTotalPrice(Double totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+
+	public Double getSystemSize() {
+		return systemSize;
+	}
+
+	public void setSystemSize(Double systemSize) {
+		this.systemSize = systemSize;
 	}
 
 	public Customer getCustomer() {
@@ -65,6 +80,14 @@ public class Contract {
 
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
+	}
+
+	public String getFileUrl() {
+		return fileUrl;
+	}
+
+	public void setFileUrl(String fileUrl) {
+		this.fileUrl = fileUrl;
 	}
     
     
