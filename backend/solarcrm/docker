@@ -1,9 +1,25 @@
-FROM openjdk:17
+# Stage 1: Build the JAR using Maven
+FROM maven:3.8.4-openjdk-17 AS builder
+WORKDIR /build
 
+# 1. Copy only the pom.xml to cache dependencies (speeds up future builds)
+COPY pom.xml .
+RUN mvn dependency:go-offline
+
+# 2. Copy the source code and build the application
+COPY src ./src
+RUN mvn clean package -DskipTests
+
+# Stage 2: Runtime environment (slim version for Render)
+FROM openjdk:17-jdk-slim
 WORKDIR /app
 
-COPY target/*.jar app.jar
+# 3. Copy the generated JAR from the builder stage
+# Using a wildcard (*) handles the versioning (e.g., 0.0.1-SNAPSHOT) automatically
+COPY --from=builder /build/target/*.jar app.jar
+
+# 4. Optimize JVM for Render's Free Tier (512MB RAM)
+# These flags help prevent "Out of Memory" errors on the free tier
+ENTRYPOINT ["java", "-Xmx300m", "-Xss512k", "-XX:CICompilerCount=2", "-jar", "app.jar"]
 
 EXPOSE 8080
-
-ENTRYPOINT ["java","-jar","app.jar"]
