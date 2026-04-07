@@ -1,7 +1,9 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:8080/api"
+ // baseURL: "http://localhost:8080/api"
+ baseURL: "https://solarcrm-backend-y32q.onrender.com/api"
+
 });
 
 api.interceptors.request.use(config => {
