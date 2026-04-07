@@ -27,11 +27,17 @@ public interface FinanceRepository extends JpaRepository<Finance, Long> {
     List<LeaderboardDTO> getSalesLeaderboard();
     
     
+//    @Query("""
+//    		SELECT FUNCTION('MONTH', f.createdAt), SUM(f.loanAmount)
+//    		FROM Finance f
+//    		GROUP BY FUNCTION('MONTH', f.createdAt)
+//    		ORDER BY FUNCTION('MONTH', f.createdAt)
+//    		""")
     @Query("""
-    		SELECT FUNCTION('MONTH', f.createdAt), SUM(f.loanAmount)
-    		FROM Finance f
-    		GROUP BY FUNCTION('MONTH', f.createdAt)
-    		ORDER BY FUNCTION('MONTH', f.createdAt)
-    		""")
+    	    SELECT EXTRACT(MONTH FROM f.createdAt), SUM(f.loanAmount)
+    	    FROM Finance f
+    	    GROUP BY EXTRACT(MONTH FROM f.createdAt)
+    	    ORDER BY EXTRACT(MONTH FROM f.createdAt)
+    	    """)
     		List<Object[]> getMonthlyRevenue();
 }
