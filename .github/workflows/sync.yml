@@ -11,21 +11,16 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
-        with:
-          fetch-depth: 0 # ⭐ IMPORTANT: Fetches all history so subtree split works flawlessly
 
-      - name: Push Subfolder to Hugging Face
-        env:
-          HF_TOKEN: ${{ secrets.HF_TOKEN }}
-        run: |
-          git config --global user.email "deploy@github.com"
-          git config --global user.name "GitHub Actions"
-          
-          # Check out the master branch fully
-          git checkout master
-          
-          # Isolate just the Java backend directory
-          git subtree split --prefix=backend/solarcrm -b hf-deploy
-          
-          # Force push it straight to your Hugging Face Space container
-          git push --force https://archanapriya:$HF_TOKEN@huggingface.co/spaces/archanapriya/solar-crm-backend hf-deploy:main
+      - name: Push Subfolder directly to Hugging Face
+        uses: andstor/copycat-action@v3
+        with:
+          personal_token: ${{ secrets.HF_TOKEN }}
+          src_path: 'backend/solarcrm/'
+          dst_path: '/'
+          dst_owner: 'archanapriya'
+          dst_repo_name: 'solar-crm-backend'
+          dst_repo_type: 'space'
+          dst_branch: 'main'
+          clean: true
+          file_filter: '*'
