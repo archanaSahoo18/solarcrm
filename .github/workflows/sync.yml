@@ -11,16 +11,31 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
-
-      - name: Push Subfolder directly to Hugging Face
-        uses: andstor/copycat-action@v3
         with:
-          personal_token: ${{ secrets.HF_TOKEN }}
-          src_path: 'backend/solarcrm/'
-          dst_path: '/'
-          dst_owner: 'archanapriya'
-          dst_repo_name: 'solar-crm-backend'
-          dst_repo_type: 'space'
-          dst_branch: 'main'
-          clean: true
-          file_filter: '*'
+          fetch-depth: 0
+
+      - name: Isolate Subfolder and Push to Hugging Face
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          # 1. Setup temporary workspace directory
+          mkdir ../isolated_backend
+          
+          # 2. Copy only the contents of your backend subfolder into it
+          cp -r backend/solarcrm/* ../isolated_backend/
+          
+          # 3. Change directory to the clean isolated backend files
+          cd ../isolated_backend
+          
+          # 4. Initialize a clean repository from scratch
+          git init
+          git config --global user.email "deploy@github.com"
+          git config --global user.name "GitHub Actions"
+          
+          # 5. Commit the files locally inside the runner
+          git add .
+          git commit -m "Production Backend Mirror Build"
+          git branch -M main
+          
+          # 6. Force push directly into your Hugging Face Space repository
+          git push --force https://archanapriya:$HF_TOKEN@huggingface.co/spaces/archanapriya/solar-crm-backend main
