@@ -151,9 +151,16 @@ public class CustomerService {
             res.setStage(c.getStage());
             res.setCreatedAt(c.getCreatedAt()); // ⭐ ADD THIS
 
-            res.setOwnerName(
-                c.getOwner() != null ? c.getOwner().getUsername() : null
-            );
+            if (c.getOwner() != null) {
+                try {
+                    res.setOwnerName(c.getOwner().getUsername());
+                } catch (jakarta.persistence.EntityNotFoundException e) {
+                    // Handles cases where owner_user_id points to a deleted user ID
+                    res.setOwnerName("Deleted / Unassigned User");
+                }
+            } else {
+                res.setOwnerName("Unassigned");
+            }
 
             res.setFinance(c.getFinance());
             res.setInstallation(c.getInstallation());
