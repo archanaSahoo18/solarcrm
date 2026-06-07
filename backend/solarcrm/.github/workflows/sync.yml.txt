@@ -1,0 +1,29 @@
+name: Sync Backend to Hugging Face Spaces
+
+on:
+  push:
+    branches: [ master ] # Triggers when you push to your master branch
+  workflow_dispatch:
+
+jobs:
+  sync-to-space:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Push Subfolder to Hugging Face
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          # Configure Git credentials
+          git config --global user.email "deploy@github.com"
+          git config --global user.name "GitHub Actions"
+          
+          # Isolate the backend subfolder using a subtree split
+          git subtree split --prefix=backend/solarcrm -b hf-deploy
+          
+          # Force push only the backend folder to Hugging Face
+          git push --force https://archanapriya:$HF_TOKEN@huggingface.co/spaces/archanapriya/solar-crm-backend hf-deploy:main
