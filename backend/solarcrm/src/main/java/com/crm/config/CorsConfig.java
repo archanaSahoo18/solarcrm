@@ -17,6 +17,7 @@ public WebMvcConfigurer corsConfigurer() {
             registry.addMapping("/**")
                     .allowedOrigins(
                         "https://sujitsolar.com",
+                        "https://crm.sujitsolar.com",
                         "http://localhost:3000"
                     )
                     .allowedMethods("GET","POST","PUT","DELETE","OPTIONS")
